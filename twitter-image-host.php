@@ -182,8 +182,8 @@ function twitter_image_host_2_server($command) {
 
                 $url = $response->data->url;
             } else {
-                // Just use a ?p=## URL
-                $url = trailingslashit(get_option('siteurl')).'?p='.$post_id;
+                // Use a WP shortlink
+                $url = wp_get_shortlink($post_id);
             }
             
             $connection = new TwitterOAuth(get_option('twitter_image_host_2_oauth_consumer_key'), get_option('twitter_image_host_2_oauth_consumer_secret'), $access_token['oauth_token'], $access_token['oauth_token_secret']);
