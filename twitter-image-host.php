@@ -163,7 +163,7 @@ function twitter_image_host_2_server($command) {
         }
 
         // Generate URL
-        $url = get_permalink($post_id);
+        $url = wp_get_shortlink($post_id);
 
         // Post to twitter posted from WordPress
         if ( isset($_REQUEST['from_admin']) ) {
@@ -181,9 +181,6 @@ function twitter_image_host_2_server($command) {
                 }
 
                 $url = $response->data->url;
-            } else {
-                // Use a WP shortlink
-                $url = wp_get_shortlink($post_id);
             }
             
             $connection = new TwitterOAuth(get_option('twitter_image_host_2_oauth_consumer_key'), get_option('twitter_image_host_2_oauth_consumer_secret'), $access_token['oauth_token'], $access_token['oauth_token_secret']);
