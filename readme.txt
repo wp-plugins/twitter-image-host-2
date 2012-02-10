@@ -49,6 +49,11 @@ enter the API URL as listed on the options page.
 
 == Changelog ==
 
+= 2.0.1 =
+
+ * Fixed duplicate OAuth dependency issue
+ * Use wp_get_shortlink
+
 = 2.0 =
 
  * Initial release of Version 2, which now stores posted images as actual posts, rather than pseudo-posts.

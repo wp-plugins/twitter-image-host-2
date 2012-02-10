@@ -3,7 +3,7 @@
 Plugin Name: Twitter Image Host 2
 Plugin URI: http://atastypixel.com/blog/wordpress/plugins/twitter-image-host-2
 Description: Host Twitter images from your blog and keep your traffic, rather than using a service like Twitpic and losing your viewers
-Version: 2.0
+Version: 2.0.1
 Author: Michael Tyson
 Author URI: http://atastypixel.com/blog
 */
@@ -57,8 +57,14 @@ function twitter_image_host_2_run() {
  * @since 0.1
  **/
 function twitter_image_host_2_server($command) {
-    require_once('class.rsp.php');
-    require_once('lib/twitteroauth.php');    
+
+    if ( !class_exists(RSP)) {    
+        require_once('class.rsp.php');
+    }
+
+    if ( !class_exists(TwitterOAuth)) {
+        require_once('lib/twitteroauth.php');
+    }
     
     global $current_user, $wpdb;
     get_currentuserinfo();
@@ -389,7 +395,9 @@ function twitter_image_host_2_posts_page() {
             return;
         }
         
-        require_once('lib/twitteroauth.php');
+        if ( !class_exists(TwitterOAuth)) {
+            require_once('lib/twitteroauth.php');
+        }
 
         // Redirect to Twitter for login
         $connection = new TwitterOAuth(get_option('twitter_image_host_2_oauth_consumer_key'), get_option('twitter_image_host_2_oauth_consumer_secret'));
