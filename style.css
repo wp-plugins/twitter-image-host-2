@@ -1,0 +1,68 @@
+.twitter_image_host_images_container {
+   overflow: auto;
+   text-align: center;
+}
+
+.twitter_image_host_images_container div {
+   display: inline-block;
+   background: white;
+   padding: 2px;
+   margin: 2px;
+   border: 1px solid #DDD;
+}
+
+.twitter_image_host_images_container div a {
+   line-height: 0;
+}
+
+.twitter_image_host_images_container div {
+   /* IE can't do inline-block, but inline is equivalent */
+   *display: inline;
+}
+
+.twitter_image_host_images_container img {
+	margin: 0;
+}
+
+.twitter_image_host_images_container .twitter_image_host_item_view_squares img {
+	width: 75px;
+	height: 75px;
+}
+
+
+.twitter_image_host_images_container div span {
+   /* See below */
+   display: none;
+}
+
+/* Styling from http://www.webdesignerwall.com/tutorials/css-decorative-gallery/
+ * Note: This will generally only work with square thumbnails. */
+
+/*
+.twitter_image_host_images_container div img {
+   width: 48px;
+   height: 48px;
+   position: relative;
+}
+
+.twitter_image_host_images_container div span {
+   z-index: 1;
+   width: 48px;
+   height: 48px;
+   display: block;
+   position: absolute;
+   background: url(images/flickr-border.png) no-repeat;
+}
+*/
+
+/* Download iepngfix.htc from http://www.twinhelix.com/css/iepngfix/ then create ie.css with the following (uncommented, of course):
+.twitter_image_host_images_container div span {
+   behavior: url(iepngfix.htc);
+}
+*/
+
+/* Then, and link it in to your template's header.php with:
+<!--[if lt IE 7]>
+<link rel="stylesheet" href="/path/to/ie.css" type="text/css" media="screen" />
+<![endif]-->
+*/
