@@ -3,7 +3,7 @@
 Plugin Name: Twitter Image Host 2
 Plugin URI: http://atastypixel.com/blog/wordpress/plugins/twitter-image-host-2
 Description: Host Twitter images from your blog and keep your traffic, rather than using a service like Twitpic and losing your viewers
-Version: 2.0.1
+Version: 2.0.2
 Author: Michael Tyson
 Author URI: http://atastypixel.com/blog
 */
@@ -62,17 +62,15 @@ function twitter_image_host_2_server($command) {
         require_once('class.rsp.php');
     }
 
-    if ( !class_exists(TwitterOAuth)) {
-        require_once('lib/twitteroauth.php');
-    }
-    
+    require_once('lib/twitteroauth.php');
+        
     global $current_user, $wpdb;
     get_currentuserinfo();
     $access_token = get_option('twitter_image_host_2_oauth_' . $current_user->user_login);
     
     if ( isset($_REQUEST['oauth_verifier']) ) {
         // Process login response from Twitter OAuth
-        $connection = new TwitterOAuth(get_option('twitter_image_host_2_oauth_consumer_key'), 
+        $connection = new TIHTwitterOAuth(get_option('twitter_image_host_2_oauth_consumer_key'), 
                                        get_option('twitter_image_host_2_oauth_consumer_secret'), 
                                        get_option('twitter_image_host_2_oauth_token_' . $current_user->user_login),
                                        get_option('twitter_image_host_2_oauth_token_secret_' . $current_user->user_login));
@@ -189,7 +187,7 @@ function twitter_image_host_2_server($command) {
                 $url = $response->data->url;
             }
             
-            $connection = new TwitterOAuth(get_option('twitter_image_host_2_oauth_consumer_key'), get_option('twitter_image_host_2_oauth_consumer_secret'), $access_token['oauth_token'], $access_token['oauth_token_secret']);
+            $connection = new TIHTwitterOAuth(get_option('twitter_image_host_2_oauth_consumer_key'), get_option('twitter_image_host_2_oauth_consumer_secret'), $access_token['oauth_token'], $access_token['oauth_token_secret']);
             $response = $connection->post('statuses/update', array('status' => $title.' '.$url));
 
             if ( $connection->http_code != 200 || !$response->id ) {
@@ -395,12 +393,10 @@ function twitter_image_host_2_posts_page() {
             return;
         }
         
-        if ( !class_exists(TwitterOAuth)) {
-            require_once('lib/twitteroauth.php');
-        }
+        require_once('lib/twitteroauth.php');
 
         // Redirect to Twitter for login
-        $connection = new TwitterOAuth(get_option('twitter_image_host_2_oauth_consumer_key'), get_option('twitter_image_host_2_oauth_consumer_secret'));
+        $connection = new TIHTwitterOAuth(get_option('twitter_image_host_2_oauth_consumer_key'), get_option('twitter_image_host_2_oauth_consumer_secret'));
         $request_token = $connection->getRequestToken();
         
         update_option('twitter_image_host_2_oauth_token_' . $current_user->user_login, $request_token['oauth_token']);

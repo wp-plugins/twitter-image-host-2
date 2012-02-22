@@ -49,6 +49,10 @@ enter the API URL as listed on the options page.
 
 == Changelog ==
 
+= 2.0.2 =
+
+ * Prefixed OAuth libraries to avoid namespace clashes with other plugins that use OAuth
+
 = 2.0.1 =
 
  * Fixed duplicate OAuth dependency issue
