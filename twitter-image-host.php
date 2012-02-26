@@ -125,7 +125,7 @@ function twitter_image_host_2_server($command) {
 
     // Replace filename
     $extension = strtolower(substr($_FILES['media']['name'], strrpos($_FILES['media']['name'], '.')+1));
-    $_FILES['media']['name'] = sanitize_title_with_dashes($title) . get_option('twitter_image_host_2_filename_suffix') . '.' . $extension;
+    $_FILES['media']['name'] = $title . get_option('twitter_image_host_2_filename_suffix') . '.' . $extension;
     
     // Look for duplicates
     $md5 = md5_file($_FILES['media']['tmp_name']);

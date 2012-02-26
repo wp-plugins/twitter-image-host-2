@@ -52,6 +52,7 @@ enter the API URL as listed on the options page.
 = 2.0.2 =
 
  * Prefixed OAuth libraries to avoid namespace clashes with other plugins that use OAuth
+ * Fixed issue uploading images with special characters in title
 
 = 2.0.1 =
 
