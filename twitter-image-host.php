@@ -3,7 +3,7 @@
 Plugin Name: Twitter Image Host 2
 Plugin URI: http://atastypixel.com/blog/wordpress/plugins/twitter-image-host-2
 Description: Host Twitter images from your blog and keep your traffic, rather than using a service like Twitpic and losing your viewers
-Version: 2.0.2
+Version: 2.1
 Author: Michael Tyson
 Author URI: http://atastypixel.com/blog
 */
@@ -163,6 +163,8 @@ function twitter_image_host_2_server($command) {
             if ( get_option('twitter_image_host_2_category') ) $post['post_category'] = array(intval(get_option('twitter_image_host_2_category')));
             $post['comment_status'] = get_option('twitter_image_host_2_comment_status', 'open');
 
+            if ( get_option('twitter_image_host_2_post_format') ) set_post_format($post_id, get_option('twitter_image_host_2_post_format'));
+
             wp_insert_post($post);
         }
 
@@ -320,6 +322,31 @@ function twitter_image_host_2_options_page() {
             </td>
         </tr>
 
+        <?php 
+        if ( current_theme_supports( 'post-formats' ) && post_type_supports( 'post', 'post-formats' ) ) :
+            $post_formats = get_theme_support( 'post-formats' );
+            if ( is_array( $post_formats[0] ) ) :
+        ?>
+        <tr valign="top">
+            <th scope="row"><?php _e('Post format:', 'twitter-image-host') ?></th>
+            <td>
+                <?php
+                $post_format = get_option('twitter_image_host_2_post_format');
+
+                if ( !$post_format )
+                    $post_format = '0';
+                // Add in the current one if it isn't there yet, in case the current theme doesn't support it
+                if ( $post_format && !in_array( $post_format, $post_formats[0] ) )
+                    $post_formats[0][] = $post_format;
+                ?>
+                <input type="radio" name="twitter_image_host_2_post_format" class="post-format" id="post-format-0" value="0" <?php checked( $post_format, '0' ); ?> /> <label for="post-format-0"><?php _e('Standard'); ?></label>
+                <?php foreach ( $post_formats[0] as $format ) : ?>
+                <br /><input type="radio" name="twitter_image_host_2_post_format" class="post-format" id="post-format-<?php echo esc_attr( $format ); ?>" value="<?php echo esc_attr( $format ); ?>" <?php checked( $post_format, $format ); ?> /> <label for="post-format-<?php echo esc_attr( $format ); ?>"><?php echo esc_html( get_post_format_string( $format ) ); ?></label>
+                <?php endforeach; ?><br />
+            </td>
+        </tr>
+        <?php endif; endif; ?>
+
         <tr valign="top">
             <th scope="row"><?php _e('Comment status for posts:', 'twitter-image-host') ?></th>
             <td>
@@ -362,7 +389,7 @@ function twitter_image_host_2_options_page() {
 
     </table>
     <input type="hidden" name="action" value="update" />
-    <input type="hidden" name="page_options" value="twitter_image_host_2_oauth_consumer_key, twitter_image_host_2_oauth_consumer_secret, twitter_image_host_2_category, twitter_image_host_2_comment_status, twitter_image_host_2_filename_suffix, twitter_image_host_2_media_size, twitter_image_host_2_bitly_login, twitter_image_host_2_bitly_enabled, twitter_image_host_2_bitly_login, twitter_image_host_2_bitly_apikey" />
+    <input type="hidden" name="page_options" value="twitter_image_host_2_oauth_consumer_key, twitter_image_host_2_oauth_consumer_secret, twitter_image_host_2_category, twitter_image_host_2_post_format, twitter_image_host_2_comment_status, twitter_image_host_2_filename_suffix, twitter_image_host_2_media_size, twitter_image_host_2_bitly_login, twitter_image_host_2_bitly_enabled, twitter_image_host_2_bitly_login, twitter_image_host_2_bitly_apikey" />
     
     <p class="submit">
     <input type="submit" name="Submit" value="<?php _e('Save Changes', 'twitter-image-host') ?>" />

@@ -49,6 +49,10 @@ enter the API URL as listed on the options page.
 
 == Changelog ==
 
+= 2.1 =
+
+ * Added support for post formats
+
 = 2.0.2 =
 
  * Prefixed OAuth libraries to avoid namespace clashes with other plugins that use OAuth
