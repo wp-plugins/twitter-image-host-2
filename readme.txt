@@ -27,10 +27,27 @@ custom image hosting services.
 
 == Installation ==
 
-1. Unzip the package, and upload `twitter-image-host-2` to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Visit the settings page and configure the plugin
-4. Start submitting images - See the 'Posting Images' section for more
+Install Twitter Image Host 2 from within WordPress, or:
+
+1. Download from the [WordPress plugins repository](http://wordpress.org/extend/plugins/twitter-image-host-2/).
+2. Unzip the package, and upload `twitter-image-host-2` to the `/wp-content/plugins/` directory.   
+
+Then,
+
+3. Activate the plugin through the 'Plugins' menu in WordPress
+4. Set your site permalinks to a "friendly" permalink format (not the default "?p=##"). Alternatively, create a file called `.htaccess` in your web root, with the following content:
+
+		<IfModule mod_rewrite.c>
+		RewriteEngine On
+		RewriteBase /
+		RewriteRule ^index\.php$ - [L]
+		RewriteCond %{REQUEST_FILENAME} !-f
+		RewriteCond %{REQUEST_FILENAME} !-d
+		RewriteRule . /index.php [L]
+		</IfModule>
+
+5. Visit the settings page and configure the plugin
+6. Start submitting images - See the 'Posting Images' section for more
 
 If you find Twitter Image Host useful, please consider buying some great [iOS software](http://atastypixel.com/products). Then
 tell all your friends, family and pets.
